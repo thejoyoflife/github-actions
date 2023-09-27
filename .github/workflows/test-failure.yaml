@@ -1,0 +1,17 @@
+name: Failure Testing
+on:
+  workflow_dispatch:
+jobs:
+  test-retry:
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Fake Failure
+        run: |
+          sleep 20
+          exit 1        
+      - name: Run Tests
+        if: failure()
+        run: echo "Running Failed Cleanup"
+      - name: Cancelled Step Run
+        if: cancelled()
+        run: echo "Running cancelled Cleanup"
